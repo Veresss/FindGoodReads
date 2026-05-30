@@ -7,7 +7,7 @@ import {
   NavigationMenuItem,
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 
 export function Navbar() {
@@ -44,6 +44,7 @@ export function Navbar() {
             <Menu className="h-6 w-6" />
           </SheetTrigger>
           <SheetContent side="right" className="w-64">
+            <SheetTitle className="sr-only">Navigation menu</SheetTitle>
             <nav className="flex flex-col gap-4 mt-8">
               <Link href="/" className="text-lg ml-4">
                 Home
