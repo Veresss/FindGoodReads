@@ -3,10 +3,11 @@ import { Geist, Geist_Mono, Inter, Public_Sans, Source_Sans_3, Figtree } from "n
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
-const publicSansHeading = Public_Sans({subsets:['latin'],variable:'--font-heading'});
+const publicSansHeading = Public_Sans({ subsets: ['latin'], variable: '--font-heading' });
 
-const figtree = Figtree({subsets:['latin'],variable:'--font-sans'});
+const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,13 +31,15 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en" suppressHydrationWarning
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", figtree.variable, publicSansHeading.variable)}
     >
-      <body className="min-h-full flex flex-col">
-        <Navbar />
-        {children}
-      </body>
+      <ThemeProvider>
+        <body className="min-h-full flex flex-col">
+          <Navbar />
+          {children}
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
