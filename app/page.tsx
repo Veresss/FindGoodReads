@@ -7,13 +7,28 @@ import React from "react";
 export default function Home() {
   const dotLottieRef = React.useRef<DotLottie | null>(null)
   const [loop, setLoop] = React.useState(false)
+  const book = React.useRef<any>(null)
+  const getBook = async () => {
+    try {
+      setLoop(true)
+      const res = await fetch('/api/random-book')
+      const data = await res.json()
+      console.log('Random book:', data)
+      book.current = data
+      setLoop(false)
+      return data
+    } catch (err) {
+      console.error('Error fetching random book:', err)
+      setLoop(false)
+    }
+  }
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black">
         <Button variant={"generate"} size={"xl"}
           onClick={() => { 
             dotLottieRef.current?.play();
-            setLoop(!loop)
+            getBook()
            }}
         >
           <div className="flex flex-row justify-center items-center gap-2">
@@ -29,6 +44,11 @@ export default function Home() {
             <span>Find your next book</span>
           </div>
         </Button>
+
+        <div>
+          <h1 className="text-4xl font-bold text-center mt-16">{book.current?.work.title}</h1>
+          <p className="text-center mt-4 text-lg">{book.current?.work.authors.join(', ')}</p>
+        </div>
       </main>
     </div>
   );
